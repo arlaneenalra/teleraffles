@@ -1,11 +1,16 @@
 <?=$this->render('header.phtml')?>
 <h1><?=$this->name?></h1>
 <h4>Text "<?=$this->key?>" to 512-524-6954 to enter</h4>
-<h5>Currently there are <?=$this->entrants?> people entered</h5>
+<h5>Currently there are <span id="entrants">0</span>  people entered</h5>
 <script>
-    setTimeout(function() {
-        window.location.reload();
-    }, 5000);
+    $(function () {
+        var entrants = $('#entrants');
+        setInterval(function() {
+            $.get('/viewAjax/<?=$this->key?>', function (data) {
+                entrants.html(data.entrants);
+            });
+        }, 5000);
+    });
 </script>
 <button class="btn btn btn-success" onclick="window.location = '/winners/<?=$this->key?>';">Pick <?=$this->winners?> Winners</button>
 <?=$this->render('footer.phtml')?>

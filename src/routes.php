@@ -4,6 +4,7 @@ $router = $application->router;
 
 $router['homepage']('GET /', 'Teleraffle\Controller\Homepage.index');
 $router['create']('GET,POST /create', 'Teleraffle\Controller\Raffle.create');
+$router['viewAjax']('GET /viewAjax/:id', 'Teleraffle\Controller\Raffle.viewAjax');
 $router['view']('GET /view/:id', 'Teleraffle\Controller\Raffle.view');
 $router['winners']('GET /winners/:id', 'Teleraffle\Controller\Raffle.winners');
 $router['sms']('POST /sms', 'Teleraffle\Controller\Sms.receive');

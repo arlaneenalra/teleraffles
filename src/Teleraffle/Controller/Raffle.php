@@ -35,6 +35,21 @@ class Raffle
         }
     }
 
+   
+    public function viewAjax($id)
+    {
+        $p = $this->application->redis;
+        $raffleKey = "raffle:$id";
+        $raffle = $p->hgetall($raffleKey);
+        $entrantsKey = "entrants:$id";
+        $entrants = count($p->smembers($entrantsKey)) ?: 0;
+
+        header('Content-Type: application/json');
+        return json_encode(array(
+            'entrants' => $entrants              
+        ));
+    }
+    
     public function view($id)
     {
         $p = $this->application->redis;
@@ -45,7 +60,6 @@ class Raffle
         $v = new View;
         $v->key = $raffle["key"];
         $v->name = $raffle["name"];
-        $v->entrants = $entrants;
         $v->winners = $raffle["winners"];
         return $v->render('view.phtml');
     }
